@@ -1,0 +1,60 @@
+function pooledFeatures = cnnPoolLarge(poolDim, convolvedFeatures)
+%cnnPool Pools the given convolved features
+%
+% Parameters:
+%  poolDim - dimension of pooling region
+%  convolvedFeatures - convolved features to pool (as given by cnnConvolve)
+%                      convolvedFeatures(featureNum, imageNum, imageRow, imageCol)
+%
+% Returns:
+%  pooledFeatures - matrix of pooled features in the form
+%                   pooledFeatures(featureNum, imageNum, poolRow, poolCol)
+%     
+
+if (exist('poolDim') == 0 )
+    clc; clear all;
+    load ('cnnPool.mat');
+end
+
+numImages = size(convolvedFeatures, 2);
+numFeatures = size(convolvedFeatures, 1);
+convolvedDimX = size(convolvedFeatures, 4);
+convolvedDimY = size(convolvedFeatures, 3);
+numPooledFeaturesX = floor(convolvedDimX / poolDim);
+numPooledFeaturesY = floor(convolvedDimY / poolDim);
+pooledFeatures = zeros(numFeatures, numImages, numPooledFeaturesY, numPooledFeaturesX);
+
+% -------------------- YOUR CODE HERE --------------------
+% Instructions:
+%   Now pool the convolved features in regions of poolDim x poolDim,
+%   to obtain the 
+%   numFeatures x numImages x (convolvedDim/poolDim) x (convolvedDim/poolDim) 
+%   matrix pooledFeatures, such that
+%   pooledFeatures(featureNum, imageNum, poolRow, poolCol) is the 
+%   value of the featureNum feature for the imageNum image pooled over the
+%   corresponding (poolRow, poolCol) pooling region 
+%   (see http://ufldl/wiki/index.php/Pooling )
+%   
+%   Use mean pooling here.
+% -------------------- YOUR CODE HERE --------------------
+
+
+% 1~19, 20 ~ (20 + 19 - 1), 
+for row=0:numPooledFeaturesY-1
+    startRow = row*poolDim+1;
+    endRow = startRow +  poolDim - 1;
+    for col=0:numPooledFeaturesX-1
+        startCol = col*poolDim+1;
+        endCol = startCol +  poolDim - 1;
+        pooledFeaturesSingle = convolvedFeatures(:,:,startRow:endRow,startCol:endCol);
+        
+        % mean pooling
+        pooledFeatures(:,:,row+1,col+1) = mean(mean(pooledFeaturesSingle,4),3);
+        
+        % max pooling
+%         pooledFeatures(:,:,row+1,col+1) = max(max(pooledFeaturesSingle,[], 4),[],3);
+    end
+end
+
+end
+
