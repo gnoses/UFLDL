@@ -14,3 +14,6 @@ original site : http://deeplearning.stanford.edu/wiki/index.php/UFLDL_Tutorial
 
 5. Sparse autoencoder + convolution + logistic regression
    (CNN Feature generator for https://github.com/gnoses/CNNObjectDetection/tree/master/GnosesConvNetConsole)
+
+6. 1L-CNN (Single Convolutiona layer) 
+   (New UFLDL - http://deeplearning.stanford.edu/tutorial/)
